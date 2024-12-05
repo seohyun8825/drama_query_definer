@@ -30,7 +30,7 @@ def read_script_from_txt(txt_path):
 def GPT4(prompt, key, file_path=None):
     url = "https://api.openai.com/v1/chat/completions"
     api_key = key
-    with open('template/temp_extract_second_query.txt', 'r', encoding='utf-8') as f:
+    with open('template/temp_long_frame_based_window.txt', 'r', encoding='utf-8') as f:
         template = f.readlines()
 
     # SRT 또는 TXT 파일 처리
@@ -70,7 +70,7 @@ def GPT4(prompt, key, file_path=None):
     text = obj['choices'][0]['message']['content']
     print(text)
 
-    return get_params_dict(text)
+    return get_params_window(text)
 
 #Llama-VARCO-8B-Instruct
 
@@ -183,3 +183,35 @@ def get_params_dict_frame(output_text):
     return para_dict
 
 
+
+def get_params_window(output_text):
+    """
+    Extract video segments and their descriptions from formatted text with flexible formatting.
+    """
+    # Regex to find segment descriptions with corresponding numbers and time ranges
+    pattern = r"(\d+)\.\s*(.+?)\s*\((\d+)\s*-\s*(\d+)\)"
+
+    # Find all matches
+    matches = re.findall(pattern, output_text)
+
+    # Debugging: Log matches for inspection
+    print(f"DEBUG: Matches found: {matches}")
+
+    if not matches:
+        print("DEBUG: No valid matches found in GPT response.")
+        return {}
+
+    # Create parameter dictionary
+    para_dict = {}
+    for segment_num, description, start_time, end_time in matches:
+        try:
+            para_dict[f"Segment {segment_num}"] = {
+                "Description": description.strip(),
+                "Start Time": int(start_time.strip()),
+                "End Time": int(end_time.strip())
+            }
+        except ValueError as e:
+            print(f"DEBUG: Error parsing segment {segment_num}: {e}")
+            continue
+
+    return para_dict

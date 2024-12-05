@@ -4,17 +4,55 @@ from dotenv import load_dotenv
 import os
 from moviepy.editor import concatenate_videoclips, VideoFileClip
 from datetime import datetime, timedelta
-
+import json
 load_dotenv()
 api_key = os.getenv('API_KEY')
-srt_path = r"C:\Users\user\Thumbnail_Generation\Marry_husband_daebon.srt"
+file_path = r"chatgpt_summarization.txt"
+
+
+################## for one prompt####################
 
 # User query input
 prompt = '''
+여우 같은 동료와 무능한 상사의 대환장 콜라보 
 '''
+#para_dict = GPT4(prompt, key=api_key, file_path = None)
+####################################################3
+
+prompts = [
+    '''
+여우 같은 동료와 무능한 상사의 대환장 콜라보 
+'''
+]
+
+# Placeholder for the API key (replace with your actual key)
+
+# Result list to store the JSON data
+result_data = []
+
+# Process each prompt
+for i, prompt in enumerate(prompts, start=1):
+    try:
+        # Generate para_dict using GPT4 function
+        para_dict = GPT4(prompt, key=api_key, file_path=file_path)
+        
+        # Append data in the desired format
+        result_data.append({
+            "Prompt": f"Prompt {i}",
+            "Timeline": para_dict
+        })
+    except Exception as e:
+        print(f"Error processing Prompt {i}: {str(e)}")
+        continue
+
+# Save result_data to a JSON file
+output_file = "long_time_onestage.json"
+with open(output_file, "w", encoding="utf-8") as f:
+    json.dump(result_data, f, ensure_ascii=False, indent=4)
+
+print(f"JSON data saved to {output_file}")
 
 
-para_dict = GPT4(prompt, key=api_key, srt_path = srt_path)
 def adjust_time_with_offset(time_str, offset=5):
     """
     Adjusts the time string by adding an offset in seconds.

@@ -1,0 +1,35 @@
+[
+    {
+        "Prompt": "Prompt 1",
+        "Timeline": {
+            "Segment 1": {
+                "Start Time": "00:51:01,768",
+                "End Time": "00:53:08,746"
+            },
+            "Segment 2": {
+                "Start Time": "00:29:00,485",
+                "End Time": "00:31:00,943"
+            },
+            "Segment 3": {
+                "Start Time": "00:34:06,336",
+                "End Time": "00:35:48,874"
+            },
+            "Segment 4": {
+                "Start Time": "00:51:01,768",
+                "End Time": "00:53:08,746"
+            },
+            "Segment 5": {
+                "Start Time": "00:39:51,835",
+                "End Time": "00:41:46,657"
+            },
+            "Segment 6": {
+                "Start Time": "00:52:01,848",
+                "End Time": "00:56:05,460"
+            },
+            "Segment 7": {
+                "Start Time": "00:59:03,309",
+                "End Time": "01:00:00,639"
+            }
+        }
+    }
+]
