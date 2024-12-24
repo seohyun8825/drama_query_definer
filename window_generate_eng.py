@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from model.window_output import GPT4, local_llm
+from model.window_output_eng import GPT4, local_llm
 from dotenv import load_dotenv
 import os
 from moviepy.editor import concatenate_videoclips, VideoFileClip
@@ -144,7 +144,7 @@ def process_with_gpt_sliding(prompts, file_path, key, frame_to_time_map, lines_p
 
     for chunk_index, chunk in enumerate(summarization_chunks):
         chunk_text = "".join(chunk)
-        current_prompt = f"쿼리:{prompts[0]}\n\n현재 내용:\n{chunk_text}"
+        current_prompt = f"Query:{prompts[0]}\n\n Current Content:\n{chunk_text}"
 
         try:
             # Generate para_dict using GPT4 function
@@ -185,15 +185,14 @@ def process_with_gpt_sliding(prompts, file_path, key, frame_to_time_map, lines_p
 
 
 # Example Usage
-file_path = r"C:\Users\user\Thumbnail_Generation\Marry_husband_daebon.srt"
-prompts = ['''김지원, 도난당한 커피에서 운명을 되찾다
-김경욱, 회사에서 프로젝트 비판으로 긴장감 조성
-김경욱과 직장 내 갈등 속 김지원의 커리어 의지
-김지원과 민환, 실망 속 화해하며 개인과 직장 삶 균형 찾기
-김지원, 동료들의 비판 속에서도 대담한 제안 재도전
-김지원, 밀키트 논의에서 성별 역학과 인정투쟁에 직면
-김지원, 수근거리는 동창회에서의 사회적 고립 부각
-''']
+file_path = r"Daebon\ep02_eng.txt"
+prompts = ['''- Jiwon's struggle for control over her personal and professional destiny.
+- Workplace dynamics and tensions impacting personal relationships.
+- Jiwon's perseverance and determination amidst professional challenges.
+- The emotional complexities of reconciling personal and romantic relationships.
+- Navigating and challenging gender dynamics and recognition in the workplace.
+- Social isolation and challenges in maintaining personal image amidst gossip
+.''']
 
 # Load frame to time map
 with open(mapped_json_path, 'r', encoding='utf-8') as file:
@@ -206,14 +205,14 @@ print(result_data)
 
 
 # Save result_data to a JSON file
-output_file = "long_time_onestage_번역요약다시번역_5번.json"
+output_file = "long_time_eng_요약번역본_4번.json"
 with open(output_file, "w", encoding="utf-8") as f:
     json.dump(result_data, f, ensure_ascii=False, indent=4)
 
 print(f"JSON data saved to {output_file}")
 
 
-def adjust_time_with_offset(time_str, offset=5):
+def adjust_time_with_offset(time_str, offset=0):
     """
     Adjusts the time string by adding an offset in seconds.
     """
@@ -222,7 +221,7 @@ def adjust_time_with_offset(time_str, offset=5):
     adjusted_time = original_time + timedelta(seconds=offset)
     return adjusted_time.strftime("%H:%M:%S.%f")[:-3]  # Return adjusted time string in MoviePy format
 
-def process_video_moviepy(para_dict_with_time, video_path, output_path, time_offset=5):
+def process_video_moviepy(para_dict_with_time, video_path, output_path, time_offset=0):
     """
     Processes video clips based on provided time segments (time-based `para_dict`) and concatenates them.
     """
@@ -239,7 +238,7 @@ def process_video_moviepy(para_dict_with_time, video_path, output_path, time_off
 
     # Concatenate clips
     final_video = concatenate_videoclips(clips, method="compose")
-    final_output_path = os.path.join(output_path, "final_output_yoyo.mp4")
+    final_output_path = os.path.join(output_path, "final_output.mp4")
     final_video.write_videofile(final_output_path, codec="libx264", audio_codec="libmp3lame")
 
     # 자원 정리

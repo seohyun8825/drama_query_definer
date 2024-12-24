@@ -147,7 +147,7 @@ def get_params_dict_frame(output_text):
     Convert frame ranges to timestamps using a hardcoded JSON path and store in a dictionary.
     """
     # Hardcoded JSON file path
-    mapped_json_path = r"C:\Users\user\Thumbnail_Generation\mapped_json.json"
+    mapped_json_path = r"C:\Users\user\Thumbnail_Generation\utils\mapped_json.json"
 
     # Load mapped JSON file
     with open(mapped_json_path, 'r', encoding='utf-8') as file:

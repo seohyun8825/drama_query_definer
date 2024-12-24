@@ -30,7 +30,7 @@ def read_script_from_txt(txt_path):
 def GPT4(prompt, key, file_path=None):
     url = "https://api.openai.com/v1/chat/completions"
     api_key = key
-    with open('template/temp_long_frame_based_extract_query.txt', 'r', encoding='utf-8') as f:
+    with open('eng_temp/temp_long_frame_based_extract_query.txt', 'r', encoding='utf-8') as f:
         template = f.readlines()
 
     # SRT 또는 TXT 파일 처리
@@ -43,9 +43,9 @@ def GPT4(prompt, key, file_path=None):
             print("Processed TXT file")
         else:
             raise ValueError("Unsupported file type. Only .srt and .txt files are supported.")
-        prompt = f"{prompt}\n\n 대본:\n{script_text}"
+        prompt = f"{prompt}\n\n Script:\n{script_text}"
         
-    user_textprompt = f"프롬프트:{prompt} \n:"
+    user_textprompt = f"Prompt:{prompt} \n:"
     textprompt = f"{' '.join(template)} \n {user_textprompt}"
     
     payload = json.dumps({
@@ -75,6 +75,44 @@ def GPT4(prompt, key, file_path=None):
 #Llama-VARCO-8B-Instruct
 
 
+
+
+def local_llm(prompt):
+    '''
+    if model_path==None:
+        model_id = "Llama-2-13b-chat-hf" 
+        #model_id = "Llama-VARCO-8B-Instruct"
+    else:
+        model_id=model_path
+    print('Using model:',model_id)
+    model = LlamaForCausalLM.from_pretrained(model_id, load_in_8bit=False, device_map='auto', torch_dtype=torch.float16)
+    '''
+    model = AutoModelForCausalLM.from_pretrained(
+        "meta-llama/Llama-2-13b-hf",
+        torch_dtype=torch.bfloat16,
+        device_map="auto"
+    )
+    tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-13b-hf")
+
+
+    with open('template/template.txt', 'r', encoding='utf-8') as f:
+        template = f.readlines()
+
+    user_textprompt=f"Caption:{prompt} \n Let's think step by step:"
+    textprompt= f"{' '.join(template)} \n {user_textprompt}"
+    model_input = tokenizer(textprompt, return_tensors="pt").to("cuda")
+
+
+    model.eval()
+    with torch.no_grad():
+        print('waiting for LLM response')
+        res = model.generate(**model_input, max_new_tokens=4096)[0]
+        output=tokenizer.decode(res, skip_special_tokens=True)
+        output = output.replace(textprompt,'')
+
+
+        print(output)
+    return get_params_dict(output)
 
 
 def get_params_dict(output_text):

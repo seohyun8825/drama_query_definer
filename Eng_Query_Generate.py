@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from model.llm_output import GPT4, local_llm
+from model.eng_llm import GPT4
 from dotenv import load_dotenv
 import os
 from moviepy.editor import concatenate_videoclips, VideoFileClip
@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 import json
 load_dotenv()
 api_key = os.getenv('API_KEY')
-file_path = r"chatgpt_summarization.txt"
+file_path = r"Daebon\chatgpt_summarization_eng.txt"
 
 
 ################## for one prompt####################
@@ -21,7 +21,7 @@ prompt = '''
 
 prompts = [
     '''
-여우 같은 동료와 무능한 상사의 대환장 콜라보 
+
 '''
 ]
 
@@ -46,7 +46,7 @@ for i, prompt in enumerate(prompts, start=1):
         continue
 
 # Save result_data to a JSON file
-output_file = "long_time_onestage.json"
+output_file = "long_time_onestage_4again.json"
 with open(output_file, "w", encoding="utf-8") as f:
     json.dump(result_data, f, ensure_ascii=False, indent=4)
 
@@ -90,7 +90,7 @@ def process_video_moviepy(para_dict, video_path, output_path, time_offset=5):
     print(f"Final video saved at: {final_output_path}")
 
 # Define paths
-video_path = r"C:\Users\user\Thumbnail_Generation\marry_2.mp4"
+video_path = r"MarryE02.mkv"
 output_path = r"C:\Users\user\Thumbnail_Generation\marry_2"
 
 # Process video

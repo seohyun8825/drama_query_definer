@@ -3,7 +3,7 @@ import json
 import re
 
 # JSON 파일 경로
-json_path = r"C:\Users\user\Thumbnail_Generation\chatgpt_summarization.txt"
+json_path = r"C:\Users\user\Thumbnail_Generation\long_time_onestage.json"
 
 # JSON 데이터 로드
 with open(json_path, 'r', encoding='utf-8') as file:
