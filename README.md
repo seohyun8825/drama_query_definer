@@ -40,7 +40,7 @@ python run_experiment.py --config config/highlight_search.json
 ```
 
 ## Customizing and Extra experiements
-
+config/ 안의 json 파일에서
 1. **`template_path` 변경:**
    - template path를 변경하여 원하는 template을 넣으면 됩니다
 
