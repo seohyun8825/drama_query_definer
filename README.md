@@ -19,10 +19,10 @@
    ```
 
 4. `data/drama` 폴더에 드라마 영상 추가:
-   - 드라마 영상을 다운로드하여 `data/drama` 디렉토리에 넣기기
+   - 드라마 영상을 다운로드하여 `data/drama` 디렉토리에 넣기
 
 5. `.env` 파일 생성:
-   - `.env` 파일 안에 OpenAI API 키를 다음과 같이 추가하기기
+   - `.env` 파일 안에 OpenAI API 키를 다음과 같이 추가하기
      ```
      API_KEY=your_openai_api_key
      ```
@@ -42,7 +42,7 @@ python run_experiment.py --config config/highlight_search.json
 ## Customizing and Extra experiements
 
 1. **`template_path` 변경:**
-   - template path를 변경하여 원하는 template을 넣으면 됩니다다
+   - template path를 변경하여 원하는 template을 넣으면 됩니다
 
 2. **`file_path` 업데이트:**
    - 요약본 스크립트, 전체 스크립트, 또는 영어 요약본 중에서 선택하여 처리할 수 있습니다.
@@ -60,7 +60,7 @@ python run_experiment.py --config config/highlight_search.json
    - `utils\convertjson.py`를 사용하여 평가를 위한 JSON 파일로 변환할 수 있습니다.
 
 2. JSON 파일을 기반으로 영상을 만들고 싶다면:
-   - `utils\tovideo.py`를 사용하면 됩니다다
+   - `utils\tovideo.py`를 사용하면 됩니다
 
 3. 각 쿼리의 위치를 영상에서 파악하고 시각화해보려면:
    - `utils\visualize.py`를 사용하면 됩니다.
