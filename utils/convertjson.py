@@ -1,6 +1,14 @@
 import json
 
-# 파일 이름 정의
+#실험에서 최종적으로 나온 json 파일은 segment(i) - description/start/end 로 구성되어있음
+#evaluation/시각화를 위해 start - end 로 구성되어있는 json 파일로 변환하기 위한 코드입니다.
+
+
+
+
+#run_experiment 를 돌려서 나온 json 파일을 input file, 원하는 파일명을 output file로 지정하면 됩니다.
+
+
 input_files = [
     "long_time_onestage_추가실험_query_rewrite_with대본.json",
     "long_time_onestage_추가실험_query_rewrite_with요약본.json",
@@ -11,7 +19,7 @@ output_files = [
     "json/Query_rewrite_요약본1.json",
 ]
 
-# 데이터 추출 및 저장 함수
+
 def extract_last_prompt_segments(input_file, output_file):
     with open(input_file, 'r', encoding='utf-8') as infile:
         data = json.load(infile)
@@ -27,11 +35,10 @@ def extract_last_prompt_segments(input_file, output_file):
             "End Time": segment['End Time']
         })
 
-    # JSON 파일로 저장
+
     with open(output_file, 'w', encoding='utf-8') as outfile:
         json.dump(time_list, outfile, ensure_ascii=False, indent=4)
 
-# 파일 처리 루프
 for input_file, output_file in zip(input_files, output_files):
     extract_last_prompt_segments(input_file, output_file)
 

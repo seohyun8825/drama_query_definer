@@ -2,6 +2,11 @@ import matplotlib.pyplot as plt
 import json
 import re
 
+## 시각화를 위한 코드. Start - end 로 되어있는 json 파일을 넣어주면,
+## 각 쿼리별 위치를 파악하기 쉽게 그래프로 나타내주는 코드입니다.
+
+
+
 # JSON 파일 경로
 json_path = r"C:\Users\user\Thumbnail_Generation\long_time_onestage.json"
 
@@ -18,7 +23,7 @@ def parse_time_to_seconds(time_str):
         return hours * 3600 + minutes * 60 + seconds + milliseconds / 1000
     return 0
 
-# JSON 데이터에서 시간 정보 추출
+
 def extract_segments_from_json(json_data):
     queries_in_seconds = []
     for item in json_data:
@@ -31,7 +36,7 @@ def extract_segments_from_json(json_data):
         queries_in_seconds.append(segments)
     return queries_in_seconds
 
-# JSON 데이터에서 타임라인 정보 변환
+
 queries_in_seconds = extract_segments_from_json(json_data)
 
 # 비디오 전체 길이 계산 (최대 끝시간)
@@ -43,7 +48,7 @@ for i, query in enumerate(queries_in_seconds):
     bars = [(start, end - start) for start, end in query]
     ax.broken_barh(bars, (i - 0.4, 0.8), facecolors=f"C{i}")
 
-# 그래프 레이블 설정
+
 ax.set_ylim(-1, len(queries_in_seconds))
 ax.set_xlim(0, video_end_time)
 ax.set_xlabel("Time (seconds)")

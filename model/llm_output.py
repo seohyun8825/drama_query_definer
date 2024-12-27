@@ -27,10 +27,10 @@ def read_script_from_txt(txt_path):
         script_text = f.read()
     return script_text
 
-def GPT4(prompt, key, file_path=None):
+def GPT4(prompt, key, file_path=None, template_path='template/temp_long_query_rewrite_search.txt', use_korean=True):
     url = "https://api.openai.com/v1/chat/completions"
     api_key = key
-    with open('template/temp_long_frame_query_rewrite.txt', 'r', encoding='utf-8') as f:
+    with open(template_path, 'r', encoding='utf-8') as f:
         template = f.readlines()
 
     # SRT 또는 TXT 파일 처리
@@ -43,11 +43,19 @@ def GPT4(prompt, key, file_path=None):
             print("Processed TXT file")
         else:
             raise ValueError("Unsupported file type. Only .srt and .txt files are supported.")
-        prompt = f"{prompt}\n\n 대본:\n{script_text}"
-        
-    user_textprompt = f"프롬프트:{prompt} \n:"
+
+        if use_korean:
+            prompt = f"{prompt}\n\n 대본:\n{script_text}"
+        else:
+            prompt = f"{prompt}\n\n script:\n{script_text}"
+
+    if use_korean:
+        user_textprompt = f"프롬프트:{prompt} \n:"
+    else:
+        user_textprompt = f"prompt:{prompt} \n:"
+
     textprompt = f"{' '.join(template)} \n {user_textprompt}"
-    
+
     payload = json.dumps({
         "model": "gpt-4o",
         "messages": [
@@ -70,7 +78,12 @@ def GPT4(prompt, key, file_path=None):
     text = obj['choices'][0]['message']['content']
     print(text)
 
-    return get_params_dict(text)
+    try:
+        para_dict = get_params_dict(text)
+    except ValueError:
+        para_dict = None
+
+    return text, para_dict
 
 
 

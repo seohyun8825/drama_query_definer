@@ -1,0 +1,39 @@
+{
+    "experiment_name": "exp1",
+    "steps": [
+      {
+        "step_name": "step1",
+        "which_py": "Query_Generate.py",
+        "file_path": "data/Script/chatgpt_summarization.txt",
+        "template_path": "utils/template/kor_template/temp_long_frame_based_extract_query.txt",
+        "prompt": "",
+        "output_text_file": "result/middle_output/step1_output.txt",
+        "use_first_line": false,
+        "use_korean": true
+      },
+      {
+        "step_name": "step2",
+        "which_py": "Query_Generate.py",
+        "file_path": "data/Script/Marry_husband_daebon.srt",
+        "template_path": "utils/template/kor_template/temp_long_plan_2stage.txt",
+        "prompt": "",
+        "output_text_file": "result/middle_output/step2_output.txt",
+        "use_first_line": true,
+        "use_korean": true
+      },
+      {
+        "step_name": "step3",
+        "which_py": "window_generate.py",
+        "file_path": "data/Script/Marry_husband_daebon.srt",
+        "template_path": "utils/template/kor_template/temp_long_frame_based_window.txt",
+        "prompt": "",
+        "output_text_file": "step3_output.txt",
+        "output_json": "result/json/final_output.json",
+        "video_path": "data/drama/marry_2.mp4",
+        "output_video_path": "result/video",
+        "mapped_json_path": "utils/mapped_json.json",
+        "previous_chunk": true,
+        "use_korean": true
+      }
+    ]
+}
