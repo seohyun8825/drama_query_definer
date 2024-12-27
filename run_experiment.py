@@ -1,14 +1,21 @@
 # -*- coding: utf-8 -*-
 import json
 import os
-
+import argparse
 from dotenv import load_dotenv
 from main.Query_Generate import run_query_generate
 from main.window_generate import run_window_generate
 
 def main():
+    parser = argparse.ArgumentParser(description="Run experiment with specified config file.")
+    parser.add_argument("--config", type=str, required=True, help="Path to the config file.")
+    args = parser.parse_args()
 
-    config_file = "config/highlight_search.json"
+    config_file = args.config
+    if not os.path.exists(config_file):
+        print(f"Config file '{config_file}' does not exist.")
+        return
+
     with open(config_file, "r", encoding="utf-8") as f:
         config = json.load(f)
 
@@ -19,7 +26,6 @@ def main():
     if not steps:
         print("No steps found in config.")
         return
-
 
     prev_text_file = None
 
@@ -53,8 +59,7 @@ def main():
                     prompt = f.read()
                     print(f" [INFO] Used ENTIRE content of {prev_text_file} as prompt")
 
-        # 2-2) which_py에 따라 run_query_generate or run_window_generate  -- 쿼리 만드는건 query_generate, 구간 찾는거는 run_window generate입니다.
-
+        # 2-2) which_py에 따라 run_query_generate or run_window_generate 실행
         if which_py == "Query_Generate.py":
             text = run_query_generate(
                 prompt=prompt,
