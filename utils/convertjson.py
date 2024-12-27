@@ -2,19 +2,13 @@ import json
 
 # 파일 이름 정의
 input_files = [
-    "요약본기반(한국어)_넘길거1.json",
-    "대사 기반(한국어)쿼리 넘길거 2.json",
-    "long_time_eng_version_번역본_3번.json",
-    "long_time_eng_요약번역본_4번.json",
-    "long_time_onestage_번역요약다시번역_5번.json"
+    "long_time_onestage_추가실험_query_rewrite_with대본.json",
+    "long_time_onestage_추가실험_query_rewrite_with요약본.json",
 ]
 
 output_files = [
-    "json/한국어요약본기반1.json",
-    "json/한국어대본기반2.json",
-    "json/영어대본기반3.json",
-    "json/영어요약본기반4.json",
-    "json/영어요약본의번역본기반5.json"
+    "json/Query_rewrite_대본1.json",
+    "json/Query_rewrite_요약본1.json",
 ]
 
 # 데이터 추출 및 저장 함수

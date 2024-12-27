@@ -185,14 +185,18 @@ def process_with_gpt_sliding(prompts, file_path, key, frame_to_time_map, lines_p
 
 
 # Example Usage
-file_path = r"C:\Users\user\Thumbnail_Generation\Marry_husband_daebon.srt"
-prompts = ['''김지원, 도난당한 커피에서 운명을 되찾다
-김경욱, 회사에서 프로젝트 비판으로 긴장감 조성
-김경욱과 직장 내 갈등 속 김지원의 커리어 의지
-김지원과 민환, 실망 속 화해하며 개인과 직장 삶 균형 찾기
-김지원, 동료들의 비판 속에서도 대담한 제안 재도전
-김지원, 밀키트 논의에서 성별 역학과 인정투쟁에 직면
-김지원, 수근거리는 동창회에서의 사회적 고립 부각
+file_path = r"C:\Users\user\Thumbnail_Generation\Daebon\Marry_husband_daebon.srt"
+prompts = ['''1. 강지원과 경욱 간의 기획안 경쟁
+강지원과 경욱은 회사에서 중요한 기획안 발표를 앞두고 치열한 경쟁을 벌인다. 경욱은 회사를 상대로 강하게 자신의 의견을 주장하며 스트라이크를  언급하고, 지원은 그런 경욱에게 자신의 운명을 빼앗길 수 있다고 고백하는 장면이 긴장감을 조성한다. 경욱이 지혁 부장과 대화하는 동안 지원이 자 신의 기획안을 다시 제출하며 경욱으로부터 비판을 받는 장면이 주요 사건으로, 두 사람의 경쟁이 한층 격화된다.
+
+2. 지원과 민환의 관계 회복 시도
+지원과 그의 옛 사랑 민환은 서로의 관계 회복을 위해 노력한다. 민환이 예전과 같지 않다고 느낀 지원에게 앞으로 더 신경 쓰겠다고 말하며 관계 회 복을 시도하는 장면이 인상적으로 연출된다. 또한, 두 사람의 대화는 더 깊어지며, 서로에 대한 진심을 다시 확인하는 과정을 보여준다.
+
+3. 희연과 지원의 새로운 관계 형성
+희연과 지원은 새로운 관계를 형성하게 된다. 희연이 지원에게 생리대를 부탁하며 그간의 거리감을 허물게 되고, 이후 지원의 선량함을 칭찬하며 함께 식사하자는 제안을 통해 친밀한 관계로 발전하는 모습을 보여준다. 이 장면들은 새로운 우정이 시작되는 과정을 재미있고 따뜻하게 그려낸다.       
+
+4. 동창회 출석을 통해 과거 흑역사를 극복하려는 지원
+지원은 과거의 흑역사를 극복하기 위해 동창회 출석을 결심한다. 수민이 동창회 참석을 망설이는 지원을 설득하는 장면에서, 희연이 그를 응원하며 흑역사를 역사로 만들기 위해 가라고 권유하는 부분이 주요 장면이다. 지원은 일과 동창회 약속 사이에서 고민하지만, 긍정적으로 결심하면서 자신의 과거를 극복하고 성장하려는 모습이 잘 드러난다.
 ''']
 
 # Load frame to time map
@@ -206,7 +210,7 @@ print(result_data)
 
 
 # Save result_data to a JSON file
-output_file = "long_time_onestage_번역요약다시번역_5번.json"
+output_file = "long_time_onestage_추가실험_query_rewrite_with요약본.json"
 with open(output_file, "w", encoding="utf-8") as f:
     json.dump(result_data, f, ensure_ascii=False, indent=4)
 
@@ -239,7 +243,7 @@ def process_video_moviepy(para_dict_with_time, video_path, output_path, time_off
 
     # Concatenate clips
     final_video = concatenate_videoclips(clips, method="compose")
-    final_output_path = os.path.join(output_path, "final_output_yoyo.mp4")
+    final_output_path = os.path.join(output_path, "final_output_extra_experiment_요약본.mp4")
     final_video.write_videofile(final_output_path, codec="libx264", audio_codec="libmp3lame")
 
     # 자원 정리

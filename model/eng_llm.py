@@ -72,10 +72,38 @@ def GPT4(prompt, key, file_path=None):
 
     return get_params_dict(text)
 
-#Llama-VARCO-8B-Instruct
+
+def get_params_dict(output_text):
+    """
+    input :  gpt output(text)
+    output : seg(i)에 해당하는 start/ end time dictionary
+    """
+    # Regex to find all time ranges (e.g., 00:01:32,967 --> 00:01:50,350)
+    pattern = r"(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})"
+    
+    # Find all matches
+    matches = re.findall(pattern, output_text)
+
+    # Debugging: Log matches for inspection
+    print(f"DEBUG: Matches found: {matches}")
+    if not matches:
+        raise ValueError("No valid segments found in the response.")
+
+    # Create parameter dictionary
+    para_dict = {}
+    for i, (start_time, end_time) in enumerate(matches, start=1):
+        para_dict[f"Segment {i}"] = {
+            "Start Time": start_time.strip(),
+            "End Time": end_time.strip()
+        }
+
+    return para_dict
 
 
 
+
+
+##만약 GPT 말고 다른 local llm을 사용하고 싶다면 밑에 local_llm 함수 이용하시면 됩니다
 
 def local_llm(prompt):
     '''
@@ -113,73 +141,4 @@ def local_llm(prompt):
 
         print(output)
     return get_params_dict(output)
-
-
-def get_params_dict(output_text):
-    """
-    Extract video segments by capturing start and end times using a stack-based approach.
-    """
-    # Regex to find all time ranges (e.g., 00:01:32,967 --> 00:01:50,350)
-    pattern = r"(\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2},\d{3})"
-    
-    # Find all matches
-    matches = re.findall(pattern, output_text)
-
-    # Debugging: Log matches for inspection
-    print(f"DEBUG: Matches found: {matches}")
-    if not matches:
-        raise ValueError("No valid segments found in the response.")
-
-    # Create parameter dictionary
-    para_dict = {}
-    for i, (start_time, end_time) in enumerate(matches, start=1):
-        para_dict[f"Segment {i}"] = {
-            "Start Time": start_time.strip(),
-            "End Time": end_time.strip()
-        }
-
-    return para_dict
-
-
-
-def get_params_dict_frame(output_text):
-    """
-    Convert frame ranges to timestamps using a hardcoded JSON path and store in a dictionary.
-    """
-    # Hardcoded JSON file path
-    mapped_json_path = r"C:\Users\user\Thumbnail_Generation\utils\mapped_json.json"
-
-    # Load mapped JSON file
-    with open(mapped_json_path, 'r', encoding='utf-8') as file:
-        frame_to_time_map = json.load(file)
-
-    # Regex to find all frame ranges (e.g., 45-64)
-    pattern = r"(\d+)\s*-\s*(\d+)"
-    matches = re.findall(pattern, output_text)
-
-    # Debugging: Log matches for inspection
-    print(f"DEBUG: Matches found: {matches}")
-    if not matches:
-        raise ValueError("No valid segments found in the response.")
-
-    # Create parameter dictionary
-    para_dict = {}
-    for i, (start_frame, end_frame) in enumerate(matches, start=1):
-        start_frame, end_frame = int(start_frame), int(end_frame)
-
-        # Get timestamps for start and end frames from the JSON map
-        start_time = frame_to_time_map.get(str(start_frame), [None])[0]
-        end_time = frame_to_time_map.get(str(end_frame), [None])[1]
-
-        if not start_time or not end_time:
-            raise ValueError(f"Timestamps not found for frame range {start_frame}-{end_frame}.")
-
-        # Save to dictionary
-        para_dict[f"Segment {i}"] = {
-            "Start Time": start_time.strip(),
-            "End Time": end_time.strip()
-        }
-
-    return para_dict
-
 

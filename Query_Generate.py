@@ -19,6 +19,7 @@ prompt = '''
 #para_dict = GPT4(prompt, key=api_key, file_path = None)
 ####################################################3
 
+
 prompts = [
     '''
 강지원과 경욱 간의 기획안 경쟁
@@ -85,7 +86,7 @@ def process_video_moviepy(para_dict, video_path, output_path, time_offset=5):
     final_output_path = os.path.join(output_path, "final_output.mp4")
     final_video.write_videofile(final_output_path, codec="libx264", audio_codec="libmp3lame")
 
-    # 자원 정리
+
     for clip in clips:
         clip.close()
     final_video.close()
