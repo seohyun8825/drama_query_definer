@@ -55,7 +55,7 @@ config/ 안의 json 파일에서
 ## 저장된 결과
 저장된 결과는 `result` 폴더 안에 JSON, TXT, 그리고 영상 형태로 저장됩니다.
 
-## Util
+## utils info
 1. `result` 폴더에 저장된 JSON 파일을 evaluation을 위한 json 형태로 변환하려면:
    - `utils\convertjson.py`를 사용하여 평가를 위한 JSON 파일로 변환할 수 있습니다.
 
