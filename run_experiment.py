@@ -8,7 +8,7 @@ from main.window_generate import run_window_generate
 
 def main():
 
-    config_file = "config/exp1.json"
+    config_file = "config/highlight_search.json"
     with open(config_file, "r", encoding="utf-8") as f:
         config = json.load(f)
 
@@ -42,7 +42,6 @@ def main():
         if not prompt and prev_text_file and os.path.exists(prev_text_file):
             with open(prev_text_file, "r", encoding="utf-8") as f:
                 if use_first_line:
-                    # 첫 줄만
                     lines = f.readlines()
                     if lines:
                         prompt = lines[0].rstrip('\n')

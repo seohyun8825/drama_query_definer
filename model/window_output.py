@@ -1,16 +1,9 @@
 import requests
 import json
 import re
-
-import requests
-import json
 import os
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import transformers
 import torch
-import re
-import torch
-from transformers import LlamaForCausalLM, LlamaTokenizer
+
 
 
 def extract_script_from_srt(srt_path):
@@ -114,44 +107,3 @@ def get_params_window(output_text):
     return para_dict
 
 
-
-
-## 만약 local llm 을 사용하고 싶다면 아래 함수 사용하시면 됩니다.
-#Llama-VARCO-8B-Instruct
-
-def local_llm(prompt):
-    '''
-    if model_path==None:
-        model_id = "Llama-2-13b-chat-hf" 
-        #model_id = "Llama-VARCO-8B-Instruct"
-    else:
-        model_id=model_path
-    print('Using model:',model_id)
-    model = LlamaForCausalLM.from_pretrained(model_id, load_in_8bit=False, device_map='auto', torch_dtype=torch.float16)
-    '''
-    model = AutoModelForCausalLM.from_pretrained(
-        "meta-llama/Llama-2-13b-hf",
-        torch_dtype=torch.bfloat16,
-        device_map="auto"
-    )
-    tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-13b-hf")
-
-
-    with open('template/template.txt', 'r', encoding='utf-8') as f:
-        template = f.readlines()
-
-    user_textprompt=f"Caption:{prompt} \n Let's think step by step:"
-    textprompt= f"{' '.join(template)} \n {user_textprompt}"
-    model_input = tokenizer(textprompt, return_tensors="pt").to("cuda")
-
-
-    model.eval()
-    with torch.no_grad():
-        print('waiting for LLM response')
-        res = model.generate(**model_input, max_new_tokens=4096)[0]
-        output=tokenizer.decode(res, skip_special_tokens=True)
-        output = output.replace(textprompt,'')
-
-
-        print(output)
-    return get_params_window(output)

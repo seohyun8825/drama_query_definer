@@ -1,16 +1,9 @@
 import requests
 import json
 import re
-
-import requests
-import json
 import os
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import transformers
+
 import torch
-import re
-import torch
-from transformers import LlamaForCausalLM, LlamaTokenizer
 
 
 def extract_script_from_srt(srt_path):
